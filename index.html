@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>هادى مانیتورینگ تلگرام</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <!-- Vazir Font via CDN -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" />
+    <style>
+        /* اصلاح جهت صفحه به راست‌چین کامل */
+        body { 
+            direction: rtl; 
+            text-align: right; 
+        }
+        /* تمام المان‌های متنی راست‌چین شوند */
+        h1, h2, h3, h4, h5, h6, p, li, span, div, section, article, header, footer, main, aside, nav, 
+        .step p, .card p, .desc, .note, .tip-box p, .commands-table td, .commands-table th,
+        .hero h1, .hero .subtitle, .badge, .feature-item h3, .feature-item p,
+        .config-item .desc, .step-list .step p, .footer p {
+            text-align: right !important;
+        }
+        /* المان‌های خاص که باید چپ‌چین بمانند */
+        .cmd, code, pre, .var, .commands-table .cmd, .step .cmd, .tip-box .cmd {
+            direction: ltr !important;
+            text-align: left !important;
+            unicode-bidi: embed;
+        }
+        /* تنظیم margin و padding برای راست‌چینی بهتر */
+        .step-num { 
+            margin-left: 0; 
+            margin-right: 0; 
+        }
+        .config-item { 
+            direction: rtl; 
+        }
+        .lang-toggle-container { 
+            display: none; 
+        }
+        /* اصلاح بخش سرویس systemd برای عدم اسکرول و تمام‌عرض */
+        .service-section {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 auto 2rem auto !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            border: none !important;
+            overflow: visible !important;
+        }
+        .service-section .service-inner {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 2rem 2rem 2.2rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            width: 100%;
+            overflow: visible !important;
+        }
+        .service-section pre {
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+            overflow: visible !important;
+            max-height: none !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        /* راست‌چین کردن لیست‌ها */
+        ul, ol {
+            padding-right: 1.5rem;
+            padding-left: 0;
+        }
+        /* راست‌چین کردن جدول */
+        .commands-table th, .commands-table td {
+            text-align: right !important;
+        }
+        /* اصلاح دکمه‌ها و المان‌های تعاملی */
+        .badge-container {
+            justify-content: center;
+        }
+        @media (max-width: 768px) {
+            .service-section .service-inner {
+                padding: 1.4rem 1.2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .service-section .service-inner {
+                padding: 1rem 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Toggle Button - Removed as requested -->
+    <!-- <div class="lang-toggle-container">
+        <button id="langToggle" class="lang-toggle" aria-label="تغییر زبان">
+            <span class="lang-icon">🌐</span>
+            <span class="lang-label">فارسی</span>
+        </button>
+    </div> -->
+
+    <!-- Main Header - اصلاح شده برای عدم فول‌واید و افکت بهتر -->
+    <header class="hero" style="border-radius: var(--radius); margin: 1.5rem auto; max-width: 1200px; width: calc(100% - 3rem); border: 1px solid var(--border-color); box-shadow: 0 8px 30px rgba(0,0,0,0.3);">
+        <div class="hero-content">
+            <h1>هادى مانیتورینگ تلگرام</h1>
+            <p class="subtitle">مدیریت و نظارت بر کانتینرهای داکر از طریق ربات تلگرام</p>
+            <div class="badge-container">
+                <span class="badge">🚀 داکر</span>
+                <span class="badge">🤖 ربات تلگرام</span>
+                <span class="badge">📊 زمان واقعی</span>
+            </div>
+        </div>
+        <div class="hero-glow"></div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+
+        <!-- Section: Overview -->
+        <section class="card fade-up">
+            <h2>🔍 نمای کلی</h2>
+            <p>
+                این ابزار با استفاده از <strong>ربات تلگرام</strong> به شما امکان می‌دهد تا 
+                <strong>کانتینرهای داکر</strong> خود را از راه دور مدیریت کنید. 
+                مشاهده لاگ‌ها، راه‌اندازی مجدد کانتینرها و دریافت گزارش‌ها تنها با چند کلیک در تلگرام انجام می‌شود.
+            </p>
+        </section>
+
+        <!-- Section: Features -->
+        <section class="card fade-up">
+            <h2>✨ قابلیت‌ها</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="icon">📋</span>
+                    <h3>دریافت لاگ</h3>
+                    <p>با انتخاب کانتینر، آخرین لاگ‌های آن را به صورت فایل دریافت کنید.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🔄</span>
+                    <h3>راه‌اندازی مجدد</h3>
+                    <p>کانتینر مورد نظر را با یک فرمان ساده ریستارت کنید.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">📱</span>
+                    <h3>دسترسی از تلگرام</h3>
+                    <p>بدون نیاز به SSH یا خط فرمان، همه کارها را از گوشی انجام دهید.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">⚡</span>
+                    <h3>پاسخ‌دهی سریع</h3>
+                    <p>ربات به صورت مداوم در حال گوش‌دادن به درخواست‌های شماست.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Create Bot -->
+        <section class="card fade-up">
+            <h2>🤖 ساخت ربات تلگرام</h2>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">۱</span>
+                    <p>تلگرام را باز کنید و به <strong>@BotFather</strong> پیام دهید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۲</span>
+                    <p>دستور <span class="cmd">/newbot</span> را ارسال کنید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۳</span>
+                    <p>یک <strong>نام</strong> برای ربات انتخاب کنید (مثلاً <code>هادى مانیتور</code>).</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۴</span>
+                    <p>یک <strong>نام کاربری</strong> با پسوند <code>bot</code> انتخاب کنید (مثلاً <code>hadi_monitor_bot</code>).</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۵</span>
+                    <p>پس از تأیید، <strong>توکن</strong> (مانند <code>123456:ABC-DEF...</code>) را کپی کنید. این همان <span class="var">BOT_TOKEN</span> است.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>توکن ربات را در جای امنی ذخیره کنید. هرگز آن را به اشتراک نگذارید.</p>
+            </div>
+        </section>
+
+        <!-- Section: Get CHAT_ID -->
+        <section class="card fade-up">
+            <h2>🆔 دریافت CHAT_ID</h2>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">۱</span>
+                    <p>ربات ساخته‌شده را در تلگرام <strong>استارت</strong> کنید (دکمه Start یا دستور <span class="cmd">/start</span>).</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۲</span>
+                    <p>برای دریافت <strong>شناسه عددی</strong> چت، از یکی از روش‌های زیر استفاده کنید:</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۳</span>
+                    <p>
+                        <strong>روش اول:</strong> از ربات <strong>@userinfobot</strong> استفاده کنید. 
+                        ربات را استارت کنید و پیام <span class="cmd">/start</span> را بفرستید. شناسه شما را نمایش می‌دهد.
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۴</span>
+                    <p>
+                        <strong>روش دوم (API):</strong> بعد از ارسال پیام به ربات خود، این URL را در مرورگر باز کنید:
+                        <br />
+                        <code>https://api.telegram.org/bot&lt;TOKEN&gt;/getUpdates</code>
+                        <br />
+                        (به جای <code>&lt;TOKEN&gt;</code> توکن ربات خود را قرار دهید.)
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۵</span>
+                    <p>در خروجی JSON، به دنبال <code>"chat":{"id":123456789}</code> بگردید. عدد داخل <code>id</code> همان <span class="var">CHAT_ID</span> است.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">⚠️</span>
+                <p>
+                    اگر از گروه استفاده می‌کنید، ربات را به گروه اضافه کنید و سپس از روش API استفاده کنید. 
+                    <strong>CHAT_ID</strong> برای گروه‌ها معمولاً با <code>-</code> شروع می‌شود (مثلاً <code>-100123456789</code>).
+                </p>
+            </div>
+        </section>
+
+        <!-- Section: Prerequisites -->
+        <section class="card fade-up">
+            <h2>🧰 پیش‌نیازها</h2>
+            <ul class="prereq-list">
+                <li><span class="cmd">bash</span> – برای اجرای اسکریپت</li>
+                <li><span class="cmd">curl</span> – ارتباط با API تلگرام</li>
+                <li><span class="cmd">jq</span> – پردازش JSON</li>
+                <li><span class="cmd">docker</span> – مدیریت کانتینرها</li>
+                <li><span class="cmd">(اختیاری) tmux / screen</span> – برای اجرای طولانی‌مدت</li>
+            </ul>
+            <p class="note">
+                <strong>نکته:</strong> تمامی ابزارها باید روی ماشین میزبان (هاست) نصب شده باشند.
+            </p>
+        </section>
+
+        <!-- Section: Configuration -->
+        <section class="card fade-up">
+            <h2>⚙️ تنظیمات (Config)</h2>
+            <div class="config-block">
+                <div class="config-item">
+                    <span class="var">BOT_TOKEN</span>
+                    <span class="desc">توکن ربات تلگرام که از @BotFather دریافت می‌شود.</span>
+                </div>
+                <div class="config-item">
+                    <span class="var">CHAT_ID</span>
+                    <span class="desc">شناسه عددی چت یا گروهی که ربات در آن پاسخ می‌دهد.</span>
+                </div>
+                <div class="config-item">
+                    <span class="var">DOCKER</span>
+                    <span class="desc">مسیر اجرایی داکر (پیش‌فرض <code>/usr/bin/docker</code>).</span>
+                </div>
+                <div class="config-item">
+                    <span class="var">TEST_MODE</span>
+                    <span class="desc">اگر <code>true</code> باشد، ربات هیچ پیامی ارسال نمی‌کند (برای تست).</span>
+                </div>
+            </div>
+            <p class="note">
+                <strong>🔐 امنیت:</strong> توکن و CHAT_ID را در متغیرهای محیطی یا فایل جداگانه ذخیره کنید.
+            </p>
+        </section>
+
+        <!-- Section: How to Run -->
+        <section class="card fade-up">
+            <h2>▶️ نحوه اجرا</h2>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">۱</span>
+                    <p>فایل <span class="file">telegram-container-monitoring.sh</span> را دانلود کنید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۲</span>
+                    <p>متغیرهای <code>BOT_TOKEN</code> و <code>CHAT_ID</code> را در آن تنظیم کنید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۳</span>
+                    <p>به فایل مجوز اجرا بدهید: <span class="cmd">chmod +x telegram-container-monitoring.sh</span></p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۴</span>
+                    <p>اسکریپت را اجرا کنید: <span class="cmd">./telegram-container-monitoring.sh</span></p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۵</span>
+                    <p>ربات را در تلگرام باز کنید و دستور <span class="cmd">/list</span> را بفرستید.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>برای اجرای پایدار در پس‌زمینه از <span class="cmd">tmux</span> یا <span class="cmd">screen</span> استفاده کنید.</p>
+            </div>
+        </section>
+
+        <!-- Section: Create Systemd Service (Ubuntu) - اصلاح شده برای عدم اسکرول و تمام‌عرض -->
+        <section class="card fade-up service-section">
+            <div class="service-inner">
+                <h2 style="font-size:1.6rem; font-weight:700; margin-bottom:1.2rem; color:#fff; display:flex; align-items:center; gap:0.6rem;">🖥️ اجرا به عنوان سرویس در اوبونتو (systemd)</h2>
+                <p style="color:var(--text-secondary); margin-bottom:0.8rem;">
+                    برای اجرای اسکریپت به صورت دائمی و در پس‌زمینه، می‌توانید از <strong>سرویس systemd</strong> استفاده کنید. 
+                    با این کار اسکریپت پس از راه‌اندازی سرور به‌صورت خودکار اجرا شده و در صورت Crash مجدداً راه‌اندازی می‌شود.
+                </p>
+                <div class="step-list">
+                    <div class="step">
+                        <span class="step-num">۱</span>
+                        <p>
+                            یک فایل سرویس جدید در مسیر <code>/etc/systemd/system/</code> ایجاد کنید:
+                            <br />
+                            <span class="cmd">sudo nano /etc/systemd/system/hadi-monitor.service</span>
+                        </p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">۲</span>
+                        <p>
+                            محتوای زیر را در فایل قرار دهید (مسیر اسکریپت را با مسیر واقعی جایگزین کنید):
+                        </p>
+                        <pre style="white-space: pre-wrap !important; word-wrap: break-word !important; overflow: visible !important; max-height: none !important; width: 100% !important; box-sizing: border-box !important;">
+[Unit]
+Description=HADI Telegram Monitoring Service
+After=docker.service network.target
+Requires=docker.service
+
+[Service]
+Type=simple
+User=root
+ExecStart=/bin/bash /path/to/telegram-container-monitoring.sh
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+                        </pre>
+                        <p class="note" style="margin-top:0.8rem;">
+                            <strong>⚠️ توجه:</strong> مسیر <code>/path/to/telegram-container-monitoring.sh</code> را به مسیر واقعی فایل اسکریپت خود تغییر دهید.
+                        </p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">۳</span>
+                        <p>فایل را ذخیره کرده و از ویرایشگر خارج شوید (<kbd>Ctrl+X</kbd>، سپس <kbd>Y</kbd> و <kbd>Enter</kbd>).</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">۴</span>
+                        <p>سرویس جدید را به systemd معرفی کنید: <span class="cmd">sudo systemctl daemon-reload</span></p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">۵</span>
+                        <p>سرویس را فعال کنید تا با بوت سرور به‌صورت خودکار اجرا شود: <span class="cmd">sudo systemctl enable hadi-monitor.service</span></p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">۶</span>
+                        <p>سرویس را شروع کنید: <span class="cmd">sudo systemctl start hadi-monitor.service</span></p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">۷</span>
+                        <p>وضعیت سرویس را بررسی کنید: <span class="cmd">sudo systemctl status hadi-monitor.service</span></p>
+                    </div>
+                </div>
+                <div class="tip-box">
+                    <span class="tip-icon">📊</span>
+                    <p>
+                        برای مشاهده لاگ‌های سرویس از دستور <span class="cmd">sudo journalctl -u hadi-monitor.service -f</span> استفاده کنید.
+                        همچنین برای توقف سرویس: <span class="cmd">sudo systemctl stop hadi-monitor.service</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: How to Set Up Bot Commands After Getting Token -->
+        <section class="card fade-up">
+            <h2>📝 تنظیم دستورات ربات پس از دریافت توکن</h2>
+            <p>
+                پس از دریافت توکن ربات، باید دستورات آن را تنظیم کنید تا کاربران بتوانند از قابلیت‌های آن استفاده کنند. 
+                برای این کار از <strong>BotFather</strong> استفاده می‌شود.
+            </p>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">۱</span>
+                    <p>به ربات <strong>@BotFather</strong> در تلگرام پیام دهید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۲</span>
+                    <p>دستور <span class="cmd">/mybots</span> را ارسال کنید و ربات مورد نظر خود را انتخاب کنید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۳</span>
+                    <p>گزینه <strong>Edit Bot</strong> و سپس <strong>Edit Commands</strong> را انتخاب کنید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۴</span>
+                    <p>
+                        لیست دستورات خود را به این فرمت وارد کنید (هر دستور در یک خط):
+                        <br />
+                        <code>command1 - توضیح دستور اول</code>
+                        <br />
+                        <code>command2 - توضیح دستور دوم</code>
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۵</span>
+                    <p>برای دستور <span class="cmd">/list</span> که نقطه عطف این ابزار است، توضیح زیر را وارد کنید:</p>
+                    <div style="background:rgba(0,0,0,0.3); padding:0.8rem; border-radius:8px; margin-top:0.5rem; width:100%;">
+                        <code style="display:block; direction:ltr; text-align:left;">list - نمایش منوی اصلی برای مدیریت کانتینرها (دریافت لاگ / ریستارت)</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-num">۶</span>
+                    <p>پس از ارسال، دستورات جدید بلافاصله در ربات شما فعال می‌شوند.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>
+                    دستورات سفارشی هنگام تایپ <code>/</code> در چت با ربات به کاربر نمایش داده می‌شوند. 
+                    این کار تعامل با ربات را بسیار آسان‌تر می‌کند.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section: How to Add Bot and Grant Admin Access -->
+        <section class="card fade-up">
+            <h2>👥 افزودن ربات به گروه و اعطای دسترسی ادمین</h2>
+            <p>
+                برای استفاده از ربات در گروه‌ها، ابتدا باید آن را به گروه اضافه کنید و سپس دسترسی ادمین به آن بدهید تا بتواند پیام‌ها را مدیریت کند.
+            </p>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">۱</span>
+                    <p>ربات خود را در تلگرام پیدا کنید و روی نام آن کلیک کنید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۲</span>
+                    <p>گزینه <strong>Add to Group</strong> یا <strong>افزودن به گروه</strong> را انتخاب کنید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۳</span>
+                    <p>گروه مورد نظر خود را انتخاب کنید و ربات را به آن اضافه کنید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۴</span>
+                    <p>در گروه، روی نام ربات کلیک کرده و گزینه <strong>Manage Group</strong> یا <strong>مدیریت گروه</strong> را انتخاب کنید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۵</span>
+                    <p>در بخش <strong>Administrators</strong> یا <strong>مدیران</strong>، روی <strong>Add Admin</strong> یا <strong>افزودن مدیر</strong> کلیک کنید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۶</span>
+                    <p>ربات خود را از لیست انتخاب کرده و مجوزهای لازم (مانند ارسال پیام، حذف پیام، مدیریت اعضا) را فعال کنید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۷</span>
+                    <p>تأیید کنید تا ربات به عنوان ادمین گروه اضافه شود.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>
+                    اعطای دسترسی ادمین به ربات به آن امکان می‌دهد تا پیام‌ها را مدیریت کرده و به درخواست‌های کاربران پاسخ دهد.
+                    بدون این دسترسی، ربات نمی‌تواند در گروه‌ها به‌درستی عمل کند.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section: How to Create Custom Commands for Telegram Bot -->
+        <section class="card fade-up">
+            <h2>🛠️ ساخت دستورات سفارشی برای ربات تلگرام</h2>
+            <p>
+                برای افزودن دستورات جدید به ربات تلگرام خود، باید از <strong>BotFather</strong> استفاده کنید. 
+                دستورات سفارشی به کاربران کمک می‌کنند تا عملکردهای ربات را بهتر بشناسند.
+            </p>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">۱</span>
+                    <p>به ربات <strong>@BotFather</strong> در تلگرام پیام دهید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۲</span>
+                    <p>دستور <span class="cmd">/mybots</span> را ارسال کنید و ربات مورد نظر خود را انتخاب کنید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۳</span>
+                    <p>گزینه <strong>Edit Bot</strong> و سپس <strong>Edit Commands</strong> را انتخاب کنید.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۴</span>
+                    <p>
+                        لیست دستورات خود را به این فرمت وارد کنید (هر دستور در یک خط):
+                        <br />
+                        <code>command1 - توضیح دستور اول</code>
+                        <br />
+                        <code>command2 - توضیح دستور دوم</code>
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-num">۵</span>
+                    <p>برای دستور <span class="cmd">/list</span> که نقطه عطف این ابزار است، توضیح زیر را وارد کنید:</p>
+                    <div style="background:rgba(0,0,0,0.3); padding:0.8rem; border-radius:8px; margin-top:0.5rem; width:100%;">
+                        <code style="display:block; direction:ltr; text-align:left;">list - نمایش منوی اصلی برای مدیریت کانتینرها (دریافت لاگ / ریستارت)</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-num">۶</span>
+                    <p>پس از ارسال، دستورات جدید بلافاصله در ربات شما فعال می‌شوند.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>
+                    دستورات سفارشی هنگام تایپ <code>/</code> در چت با ربات به کاربر نمایش داده می‌شوند. 
+                    این کار تعامل با ربات را بسیار آسان‌تر می‌کند.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section: /list Command Explanation -->
+        <section class="card fade-up">
+            <h2>📟 دستور /list</h2>
+            <p>
+                دستور <span class="cmd">/list</span> نقطه ورود اصلی برای تعامل با ربات است. وقتی این دستور را ارسال می‌کنید، ربات با یک کیبورد اینلاین پاسخ می‌دهد که دو گزینه را نشان می‌دهد:
+            </p>
+            <ul style="list-style:none; padding:0.5rem 0; display:flex; flex-direction:column; gap:0.8rem;">
+                <li style="display:flex; align-items:center; gap:0.8rem; background:rgba(255,255,255,0.02); padding:0.6rem 1rem; border-radius:8px; border-right:3px solid var(--accent);">
+                    <span style="font-size:1.2rem;">📋</span>
+                    <span><strong>لاگ‌ها</strong> – با انتخاب این گزینه می‌توانید لاگ‌های هر کانتینر را مشاهده و دانلود کنید.</span>
+                </li>
+                <li style="display:flex; align-items:center; gap:0.8rem; background:rgba(255,255,255,0.02); padding:0.6rem 1rem; border-radius:8px; border-right:3px solid #a78bfa;">
+                    <span style="font-size:1.2rem;">🔄</span>
+                    <span><strong>راه‌اندازی مجدد</strong> – با انتخاب این گزینه می‌توانید کانتینر مورد نظر را مجدداً راه‌اندازی کنید.</span>
+                </li>
+            </ul>
+            <p class="note">
+                پس از انتخاب هر یک از گزینه‌ها، ربات لیستی از تمام کانتینرهای موجود (شامل کانتینرهای متوقف شده) را برای انتخاب شما نمایش می‌دهد.
+            </p>
+            <div class="tip-box" style="margin-top:1rem;">
+                <span class="tip-icon">💡</span>
+                <p>
+                    دستور <span class="cmd">/list</span> همچنین برای نمایش مجدد منوی اصلی در صورت نیاز به بازگشت استفاده می‌شود.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section: Commands Table -->
+        <section class="card fade-up">
+            <h2>📟 دستورات ربات</h2>
+            <table class="commands-table">
+                <thead>
+                    <tr><th>دستور</th><th>توضیح</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><span class="cmd">/list</span></td><td>نمایش منوی اصلی (دریافت لاگ / ریستارت)</td></tr>
+                    <tr><td><span class="cmd">(کلیک روی دکمه‌ها)</span></td><td>انتخاب کانتینر و انجام عملیات</td></tr>
+                </tbody>
+            </table>
+            <p class="note">
+                پس از انتخاب کانتینر، لاگ‌ها به صورت فایل <code>.log</code> ارسال می‌شوند.
+            </p>
+        </section>
+
+        <!-- Footer / About -->
+        <footer class="footer">
+            <p>هادى مانیتورینگ تلگرام &mdash; مستندات نسخه ۱.۰</p>
+            <p class="small">طراحی شده با ❤️ برای مدیریت آسان داکر</p>
+        </footer>
+
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

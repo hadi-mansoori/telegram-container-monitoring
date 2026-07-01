@@ -1,0 +1,923 @@
+/* ===== RESET & BASE ===== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #0b0d15;
+    --bg-card: #131722;
+    --bg-card-hover: #1a1f2e;
+    --text-primary: #e8edf5;
+    --text-secondary: #94a3b8;
+    --accent: #6c8cff;
+    --accent-glow: rgba(108, 140, 255, 0.15);
+    --border-color: #2a2f42;
+    --shadow-color: rgba(0, 0, 0, 0.6);
+    --radius: 16px;
+    --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --perspective: 1200px;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Vazir', 'Segoe UI', Tahoma, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image:
+        radial-gradient(ellipse at 20% 20%, rgba(108, 140, 255, 0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(108, 140, 255, 0.03) 0%, transparent 60%);
+    background-attachment: fixed;
+    perspective: var(--perspective);
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 20px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    overflow-x: hidden;
+}
+
+/* ===== LANGUAGE TOGGLE BUTTON - HIDDEN ===== */
+.lang-toggle-container {
+    display: none;
+}
+
+.lang-toggle {
+    display: none;
+}
+
+/* ===== HERO - وسط‌چین با حاشیه و افکت بهبود یافته ===== */
+.hero {
+    position: relative;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 3rem 2rem 2.8rem;
+    margin: 1.5rem auto;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    width: calc(100% - 3rem);
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero:hover {
+    transform: rotateX(1deg) rotateY(1deg) scale(1.005);
+    box-shadow: 0 15px 40px rgba(108, 140, 255, 0.12), 0 8px 30px rgba(0, 0, 0, 0.4);
+    border-color: rgba(108, 140, 255, 0.2);
+}
+
+.hero-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 50% 50%, rgba(108, 140, 255, 0.06), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+    transition: background 0.5s ease;
+    animation: heroGlowFloat 8s ease-in-out infinite;
+}
+
+@keyframes heroGlowFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+    33% { transform: translate(5%, -5%) scale(1.05); opacity: 1; }
+    66% { transform: translate(-5%, 5%) scale(0.95); opacity: 0.7; }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero h1 {
+    font-size: clamp(2.4rem, 7vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #ffffff 0%, #a0b8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 40px rgba(108, 140, 255, 0.2);
+    margin-bottom: 0.4rem;
+    transform: translateZ(30px);
+    text-align: center;
+}
+
+.subtitle {
+    font-size: clamp(1rem, 2.2vw, 1.4rem);
+    color: var(--text-secondary);
+    margin-bottom: 1.8rem;
+    font-weight: 300;
+    transform: translateZ(20px);
+    text-align: center;
+}
+
+.badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    transform: translateZ(10px);
+}
+
+.badge {
+    background: rgba(108, 140, 255, 0.12);
+    border: 1px solid rgba(108, 140, 255, 0.2);
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    letter-spacing: 0.3px;
+    backdrop-filter: blur(4px);
+    transition: var(--transition);
+    cursor: pointer;
+    transform-style: preserve-3d;
+}
+
+.badge:hover {
+    background: rgba(108, 140, 255, 0.2);
+    border-color: var(--accent);
+    transform: translateY(-4px) scale(1.05) rotateX(5deg);
+    box-shadow: 0 6px 20px rgba(108, 140, 255, 0.15);
+}
+
+/* ===== CARDS - 3D TILT & GLOW ===== */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 2rem 2rem 2.2rem;
+    margin-bottom: 2.2rem;
+    transition: var(--transition);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transform: perspective(var(--perspective)) rotateX(0deg) rotateY(0deg);
+    cursor: default;
+    max-width: 100%;
+    width: 100%;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                rgba(108, 140, 255, 0.03) 0%, 
+                transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.3;
+    transition: var(--transition);
+}
+
+.card:hover {
+    border-color: rgba(108, 140, 255, 0.3);
+    transform: perspective(var(--perspective)) 
+               rotateX(calc(var(--tilt-x, 0deg) * 0.5)) 
+               rotateY(calc(var(--tilt-y, 0deg) * 0.5)) 
+               translateY(-6px) scale(1.01);
+    box-shadow: 0 20px 60px rgba(108, 140, 255, 0.12), 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.card:hover::after {
+    opacity: 0.9;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent), #a78bfa, var(--accent), transparent);
+    background-size: 200% 100%;
+    animation: shimmerLine 2s ease-in-out infinite;
+}
+
+@keyframes shimmerLine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.card h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transform: translateZ(20px);
+    transition: transform 0.3s ease;
+}
+
+.card:hover h2 {
+    transform: translateZ(35px) scale(1.02);
+}
+
+.card p {
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+    transform: translateZ(10px);
+    transition: transform 0.3s ease;
+}
+
+.card:hover p {
+    transform: translateZ(20px);
+}
+
+/* ===== FULL WIDTH SYSTEMD SECTION ===== */
+.card.full-width {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    border: none;
+}
+
+.card.full-width .full-width-inner {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 2rem 2rem 2.2rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+
+/* ===== FEATURES GRID ===== */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 0.8rem;
+}
+
+.feature-item {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    padding: 1.4rem 1.2rem;
+    text-align: center;
+    border: 1px solid transparent;
+    transition: var(--transition);
+    transform-style: preserve-3d;
+    transform: perspective(600px) rotateX(0deg) rotateY(0deg);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                rgba(108, 140, 255, 0.06) 0%, 
+                transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.feature-item:hover::before {
+    opacity: 1;
+}
+
+.feature-item:hover {
+    border-color: var(--border-color);
+    background: rgba(255, 255, 255, 0.04);
+    transform: perspective(600px) 
+               rotateX(calc(var(--tilt-x, 0deg) * 0.3)) 
+               rotateY(calc(var(--tilt-y, 0deg) * 0.3)) 
+               scale(1.04) translateY(-4px);
+    box-shadow: 0 12px 40px rgba(108, 140, 255, 0.08);
+}
+
+.feature-item .icon {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: 0.4rem;
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover .icon {
+    transform: translateZ(30px) scale(1.1) rotateY(10deg);
+}
+
+.feature-item h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.3rem;
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover h3 {
+    transform: translateZ(20px);
+}
+
+.feature-item p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover p {
+    transform: translateZ(15px);
+}
+
+/* ===== PREREQUISITES ===== */
+.prereq-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem 1.2rem;
+    padding: 0.5rem 0 0.2rem;
+}
+
+.prereq-list li {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 30px;
+    padding: 0.2rem 1.2rem 0.2rem 0.8rem;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: var(--transition);
+    cursor: default;
+}
+
+.prereq-list li::before {
+    content: '▸';
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.prereq-list li:hover {
+    transform: translateY(-2px) scale(1.03);
+    border-color: var(--accent);
+    box-shadow: 0 4px 15px rgba(108, 140, 255, 0.08);
+}
+
+.cmd {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.1rem 0.6rem;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: #a0b8ff;
+    border: 1px solid rgba(108, 140, 255, 0.15);
+}
+
+/* ===== CONFIG BLOCK ===== */
+.config-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    border-left: 3px solid var(--accent);
+}
+
+.config-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 1rem;
+    transition: var(--transition);
+    padding: 0.2rem 0.4rem;
+    border-radius: 8px;
+}
+
+.config-item:hover {
+    background: rgba(108, 140, 255, 0.04);
+    transform: translateX(4px);
+}
+
+.var {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    color: #b8ccff;
+    background: rgba(108, 140, 255, 0.1);
+    padding: 0 0.6rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.desc {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+}
+
+.note {
+    margin-top: 1rem;
+    padding: 0.8rem 1.2rem;
+    background: rgba(108, 140, 255, 0.06);
+    border-radius: 10px;
+    border-right: 3px solid var(--accent);
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+}
+
+/* ===== STEPS ===== */
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.01);
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    transition: var(--transition);
+    cursor: default;
+    transform-style: preserve-3d;
+}
+
+.step:hover {
+    background: rgba(255, 255, 255, 0.03);
+    transform: translateX(6px) scale(1.01);
+    box-shadow: 0 4px 15px rgba(108, 140, 255, 0.04);
+}
+
+.step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 50%;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+
+.step:hover .step-num {
+    transform: scale(1.1) rotate(5deg);
+    background: #7a9aff;
+    box-shadow: 0 0 20px rgba(108, 140, 255, 0.3);
+}
+
+.step p {
+    margin: 0;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.step:hover p {
+    color: var(--text-primary);
+}
+
+.step .file {
+    font-family: 'Courier New', monospace;
+    color: #c4d0ff;
+    background: rgba(108, 140, 255, 0.08);
+    padding: 0 0.4rem;
+    border-radius: 4px;
+}
+
+.tip-box {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+    background: rgba(108, 140, 255, 0.05);
+    border: 1px dashed rgba(108, 140, 255, 0.2);
+    border-radius: 12px;
+    padding: 0.8rem 1.4rem;
+    transition: var(--transition);
+}
+
+.tip-box:hover {
+    background: rgba(108, 140, 255, 0.08);
+    transform: scale(1.01);
+    border-color: var(--accent);
+}
+
+.tip-icon {
+    font-size: 1.6rem;
+}
+
+.tip-box p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* ===== TABLE ===== */
+.commands-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+.commands-table th {
+    text-align: right;
+    padding: 0.6rem 0.8rem;
+    border-bottom: 2px solid var(--border-color);
+    color: #b0c0e0;
+    font-weight: 600;
+}
+
+.commands-table td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.commands-table tr:hover td {
+    background: rgba(108, 140, 255, 0.03);
+    color: var(--text-primary);
+}
+
+.commands-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===== CODE BLOCKS & PRE - بدون اسکرول افقی ===== */
+pre {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 500px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: #b8c8e8;
+    line-height: 1.8;
+    direction: ltr;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Fix for pre inside cards to prevent horizontal scroll issues */
+.card pre {
+    max-width: 100%;
+}
+
+/* For RTL pages, ensure pre stays LTR */
+[dir="rtl"] pre {
+    direction: ltr;
+    text-align: left;
+}
+
+/* Wrapper for code blocks to ensure no overflow */
+.code-wrapper {
+    overflow: hidden;
+    border-radius: 8px;
+    margin: 0.5rem 0;
+}
+
+/* Inline code */
+code {
+    font-family: 'Courier New', monospace;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+    color: #b8ccff;
+    font-size: 0.85rem;
+    word-break: break-word;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    margin-top: 3rem;
+    padding: 2rem 0 0.5rem;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.footer .small {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin-top: 0.2rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    .container {
+        padding: 0 1rem;
+        overflow-x: hidden;
+    }
+
+    .hero {
+        padding: 2.5rem 1rem 2rem;
+        width: calc(100% - 2rem);
+        margin: 1rem auto;
+    }
+    
+    .hero:hover {
+        transform: rotateX(1deg) rotateY(1deg) scale(1.005);
+    }
+
+    .hero-content {
+        padding: 0 0.5rem;
+    }
+
+    .card {
+        padding: 1.4rem 1.2rem;
+        margin-bottom: 1.6rem;
+    }
+    
+    .card:hover {
+        transform: perspective(var(--perspective)) 
+                   rotateX(calc(var(--tilt-x, 0deg) * 0.2)) 
+                   rotateY(calc(var(--tilt-y, 0deg) * 0.2)) 
+                   translateY(-4px) scale(1.005);
+    }
+
+    .card h2 {
+        font-size: 1.3rem;
+    }
+
+    .card.full-width .full-width-inner {
+        padding: 1.4rem 1.2rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+    }
+
+    .config-block {
+        padding: 1rem;
+    }
+
+    .step {
+        flex-wrap: wrap;
+        gap: 0.4rem;
+    }
+
+    .prereq-list li {
+        font-size: 0.85rem;
+        padding: 0.1rem 0.8rem 0.1rem 0.5rem;
+    }
+
+    .commands-table th,
+    .commands-table td {
+        padding: 0.4rem 0.4rem;
+        font-size: 0.85rem;
+    }
+
+    pre {
+        font-size: 0.7rem;
+        padding: 0.8rem;
+        max-height: 350px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+}
+
+@media (max-width: 480px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .badge-container {
+        gap: 0.4rem;
+    }
+
+    .badge {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.8rem;
+    }
+
+    .config-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.1rem;
+    }
+
+    .step {
+        padding: 0.6rem 0.8rem;
+    }
+    
+    .card:hover {
+        transform: translateY(-3px) scale(1.005);
+    }
+
+    .card.full-width .full-width-inner {
+        padding: 1rem 0.8rem;
+    }
+
+    pre {
+        font-size: 0.65rem;
+        padding: 0.6rem;
+        max-height: 300px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    .hero {
+        padding: 2rem 1rem 1.5rem;
+        width: calc(100% - 1.5rem);
+        margin: 0.8rem auto;
+    }
+}
+
+/* ===== ANIMATIONS (Enhanced) ===== */
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.7s ease forwards;
+}
+
+.fade-up:nth-child(1) {
+    animation-delay: 0.05s;
+}
+.fade-up:nth-child(2) {
+    animation-delay: 0.15s;
+}
+.fade-up:nth-child(3) {
+    animation-delay: 0.25s;
+}
+.fade-up:nth-child(4) {
+    animation-delay: 0.35s;
+}
+.fade-up:nth-child(5) {
+    animation-delay: 0.45s;
+}
+.fade-up:nth-child(6) {
+    animation-delay: 0.55s;
+}
+.fade-up:nth-child(7) {
+    animation-delay: 0.65s;
+}
+
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ===== GLOW TEXT EFFECT - غیرفعال برای هدر جدید ===== */
+.hero h1::after {
+    display: none;
+}
+
+/* ===== SELECTION ===== */
+::selection {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* ===== 3D SCROLL REVEAL (Additional) ===== */
+.card,
+.feature-item,
+.step {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ===== اصلاحات راست‌چینی برای المان‌های جدول و بخش‌های مختلف ===== */
+/* اطمینان از راست‌چینی کامل برای تمام المان‌های متنی */
+body, .container, .card, .card p, .card h2, .step, .step p, .step-num,
+.tip-box, .tip-box p, .note, .desc, .config-item, .config-block,
+.feature-item, .feature-item h3, .feature-item p,
+.prereq-list, .prereq-list li,
+.commands-table th, .commands-table td,
+.footer, .footer p, .footer .small {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+/* راست‌چین کردن لیست‌ها */
+ul, ol {
+    padding-right: 1.5rem;
+    padding-left: 0;
+    direction: rtl !important;
+}
+
+/* راست‌چین کردن جدول */
+.commands-table {
+    direction: rtl !important;
+}
+
+.commands-table th, .commands-table td {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+/* المان‌های خاص که باید چپ‌چین بمانند */
+.cmd, code, pre, .var, .commands-table .cmd, .step .cmd, .tip-box .cmd {
+    direction: ltr !important;
+    text-align: left !important;
+    unicode-bidi: embed;
+}
+
+/* اصلاح هدر - وسط‌چین */
+.hero, .hero-content, .hero h1, .hero .subtitle {
+    text-align: center !important;
+    direction: rtl !important;
+}
+
+/* اصلاح بخش سرویس */
+.service-section, .service-section .service-inner {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.service-section pre {
+    direction: ltr !important;
+    text-align: left !important;
+}
+
+/* اصلاح فوتر */
+.footer {
+    text-align: center !important;
+}
