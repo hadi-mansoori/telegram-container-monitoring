@@ -3,30 +3,25 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>هادى مانیتورینگ تلگرام</title>
+    <title>منصوری مانیتورینگ تلگرام</title>
     <link rel="stylesheet" href="css/styles.css" />
-    <!-- Vazir Font via CDN -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" />
     <style>
-        /* اصلاح جهت صفحه به راست‌چین کامل */
         body { 
             direction: rtl; 
             text-align: right; 
         }
-        /* تمام المان‌های متنی راست‌چین شوند */
         h1, h2, h3, h4, h5, h6, p, li, span, div, section, article, header, footer, main, aside, nav, 
         .step p, .card p, .desc, .note, .tip-box p, .commands-table td, .commands-table th,
         .hero h1, .hero .subtitle, .badge, .feature-item h3, .feature-item p,
         .config-item .desc, .step-list .step p, .footer p {
             text-align: right !important;
         }
-        /* المان‌های خاص که باید چپ‌چین بمانند */
         .cmd, code, pre, .var, .commands-table .cmd, .step .cmd, .tip-box .cmd {
             direction: ltr !important;
             text-align: left !important;
             unicode-bidi: embed;
         }
-        /* تنظیم margin و padding برای راست‌چینی بهتر */
         .step-num { 
             margin-left: 0; 
             margin-right: 0; 
@@ -37,7 +32,6 @@
         .lang-toggle-container { 
             display: none; 
         }
-        /* اصلاح بخش سرویس systemd برای عدم اسکرول و تمام‌عرض */
         .service-section {
             width: 100% !important;
             max-width: 100% !important;
@@ -66,16 +60,13 @@
             width: 100% !important;
             box-sizing: border-box !important;
         }
-        /* راست‌چین کردن لیست‌ها */
         ul, ol {
             padding-right: 1.5rem;
             padding-left: 0;
         }
-        /* راست‌چین کردن جدول */
         .commands-table th, .commands-table td {
             text-align: right !important;
         }
-        /* اصلاح دکمه‌ها و المان‌های تعاملی */
         .badge-container {
             justify-content: center;
         }
@@ -93,15 +84,6 @@
 </head>
 <body>
 
-    <!-- Language Toggle Button - Removed as requested -->
-    <!-- <div class="lang-toggle-container">
-        <button id="langToggle" class="lang-toggle" aria-label="تغییر زبان">
-            <span class="lang-icon">🌐</span>
-            <span class="lang-label">فارسی</span>
-        </button>
-    </div> -->
-
-    <!-- Main Header - اصلاح شده برای عدم فول‌واید و افکت بهتر -->
     <header class="hero" style="border-radius: var(--radius); margin: 1.5rem auto; max-width: 1200px; width: calc(100% - 3rem); border: 1px solid var(--border-color); box-shadow: 0 8px 30px rgba(0,0,0,0.3);">
         <div class="hero-content">
             <h1>هادى مانیتورینگ تلگرام</h1>
@@ -115,10 +97,8 @@
         <div class="hero-glow"></div>
     </header>
 
-    <!-- Main Container -->
     <main class="container">
 
-        <!-- Section: Overview -->
         <section class="card fade-up">
             <h2>🔍 نمای کلی</h2>
             <p>
@@ -128,7 +108,6 @@
             </p>
         </section>
 
-        <!-- Section: Features -->
         <section class="card fade-up">
             <h2>✨ قابلیت‌ها</h2>
             <div class="features-grid">
@@ -155,7 +134,6 @@
             </div>
         </section>
 
-        <!-- Section: Create Bot -->
         <section class="card fade-up">
             <h2>🤖 ساخت ربات تلگرام</h2>
             <div class="step-list">
@@ -186,7 +164,6 @@
             </div>
         </section>
 
-        <!-- Section: Get CHAT_ID -->
         <section class="card fade-up">
             <h2>🆔 دریافت CHAT_ID</h2>
             <div class="step-list">
@@ -229,7 +206,6 @@
             </div>
         </section>
 
-        <!-- Section: Prerequisites -->
         <section class="card fade-up">
             <h2>🧰 پیش‌نیازها</h2>
             <ul class="prereq-list">
@@ -244,7 +220,6 @@
             </p>
         </section>
 
-        <!-- Section: Configuration -->
         <section class="card fade-up">
             <h2>⚙️ تنظیمات (Config)</h2>
             <div class="config-block">
@@ -270,7 +245,6 @@
             </p>
         </section>
 
-        <!-- Section: How to Run -->
         <section class="card fade-up">
             <h2>▶️ نحوه اجرا</h2>
             <div class="step-list">
@@ -301,7 +275,6 @@
             </div>
         </section>
 
-        <!-- Section: Create Systemd Service (Ubuntu) - اصلاح شده برای عدم اسکرول و تمام‌عرض -->
         <section class="card fade-up service-section">
             <div class="service-inner">
                 <h2 style="font-size:1.6rem; font-weight:700; margin-bottom:1.2rem; color:#fff; display:flex; align-items:center; gap:0.6rem;">🖥️ اجرا به عنوان سرویس در اوبونتو (systemd)</h2>
@@ -376,7 +349,6 @@ WantedBy=multi-user.target
             </div>
         </section>
 
-        <!-- Section: How to Set Up Bot Commands After Getting Token -->
         <section class="card fade-up">
             <h2>📝 تنظیم دستورات ربات پس از دریافت توکن</h2>
             <p>
@@ -427,7 +399,6 @@ WantedBy=multi-user.target
             </div>
         </section>
 
-        <!-- Section: How to Add Bot and Grant Admin Access -->
         <section class="card fade-up">
             <h2>👥 افزودن ربات به گروه و اعطای دسترسی ادمین</h2>
             <p>
@@ -472,7 +443,6 @@ WantedBy=multi-user.target
             </div>
         </section>
 
-        <!-- Section: How to Create Custom Commands for Telegram Bot -->
         <section class="card fade-up">
             <h2>🛠️ ساخت دستورات سفارشی برای ربات تلگرام</h2>
             <p>
@@ -523,7 +493,6 @@ WantedBy=multi-user.target
             </div>
         </section>
 
-        <!-- Section: /list Command Explanation -->
         <section class="card fade-up">
             <h2>📟 دستور /list</h2>
             <p>
@@ -550,7 +519,6 @@ WantedBy=multi-user.target
             </div>
         </section>
 
-        <!-- Section: Commands Table -->
         <section class="card fade-up">
             <h2>📟 دستورات ربات</h2>
             <table class="commands-table">
@@ -567,7 +535,6 @@ WantedBy=multi-user.target
             </p>
         </section>
 
-        <!-- Footer / About -->
         <footer class="footer">
             <p>هادى مانیتورینگ تلگرام &mdash; مستندات نسخه ۱.۰</p>
             <p class="small">طراحی شده با ❤️ برای مدیریت آسان داکر</p>
