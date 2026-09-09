@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mansoori Telegram Überwachung</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-card: #14141e;
+            --bg-card-hover: #1a1a2e;
+            --border-color: #2a2a3e;
+            --text-primary: #f0f0f5;
+            --text-secondary: #a0a0b8;
+            --accent: #6c5ce7;
+            --accent-hover: #7c6cf7;
+            --radius: 16px;
+            --shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #14141e 0%, #1a1a2e 50%, #0d0d1a 100%);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 3.5rem 2.5rem;
+            margin: 1.5rem auto 2.5rem;
+            max-width: 1200px;
+            width: calc(100% - 3rem);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a78bfa, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(108,92,231,0.08) 0%, transparent 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .badge {
+            background: rgba(108,92,231,0.15);
+            border: 1px solid rgba(108,92,231,0.25);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 2rem 2.2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(108,92,231,0.3);
+        }
+
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            color: var(--text-primary);
+            text-align: left;
+        }
+
+        .card p, .card li {
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .card strong {
+            color: var(--text-primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .feature-item {
+            background: rgba(255,255,255,0.02);
+            padding: 1.5rem 1.2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .feature-item:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(108,92,231,0.2);
+            transform: translateY(-2px);
+        }
+
+        .feature-item .icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-item h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--text-primary);
+            text-align: left;
+        }
+
+        .feature-item p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 10px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .step-num {
+            background: var(--accent);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .step p {
+            margin: 0;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .step strong {
+            color: var(--text-primary);
+        }
+
+        .cmd, code, .var {
+            background: rgba(255,255,255,0.06);
+            padding: 0.15rem 0.6rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.85rem;
+            color: #a78bfa;
+            direction: ltr;
+            text-align: left;
+            display: inline-block;
+        }
+
+        pre {
+            background: rgba(0,0,0,0.4);
+            padding: 1.2rem 1.5rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            margin: 0.8rem 0;
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+            overflow: visible !important;
+            max-height: none !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #e0e0e5;
+            font-size: 0.85rem;
+            display: block;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .tip-box {
+            background: rgba(108,92,231,0.08);
+            border: 1px solid rgba(108,92,231,0.2);
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .tip-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .tip-box p {
+            margin: 0;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .config-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .config-item {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 0.6rem 1rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .config-item .var {
+            font-weight: 600;
+            min-width: 100px;
+        }
+
+        .config-item .desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            text-align: left;
+        }
+
+        .commands-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5rem 0;
+        }
+
+        .commands-table th {
+            background: rgba(108,92,231,0.15);
+            padding: 0.8rem 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .commands-table td {
+            padding: 0.8rem 1.2rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .commands-table tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .commands-table .cmd {
+            background: rgba(108,92,231,0.12);
+        }
+
+        .prereq-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .prereq-list li {
+            padding: 0.4rem 0;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            padding: 0.8rem 1rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            margin-top: 0.8rem;
+            text-align: left;
+        }
+
+        .file {
+            background: rgba(255,255,255,0.06);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #7dd3fc;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 1rem;
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .footer .small {
+            font-size: 0.8rem;
+            color: rgba(160,160,184,0.6);
+        }
+
+        kbd {
+            background: rgba(255,255,255,0.08);
+            padding: 0.15rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .service-section {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 auto 2rem auto !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            border: none !important;
+            overflow: visible !important;
+        }
+
+        .service-section .service-inner {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 2rem 2rem 2.2rem;
+            box-shadow: var(--shadow);
+            width: 100%;
+            overflow: visible !important;
+        }
+
+        .service-section pre {
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+            overflow: visible !important;
+            max-height: none !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+            padding-right: 0;
+        }
+
+        ul li, ol li {
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 2rem 1.2rem;
+                width: calc(100% - 1.5rem);
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .card {
+                padding: 1.5rem 1.2rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .config-item {
+                flex-direction: column;
+                gap: 0.2rem;
+            }
+            .service-section .service-inner {
+                padding: 1.4rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            .step {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+            .service-section .service-inner {
+                padding: 1rem 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Mansoori Telegram Überwachung</h1>
+            <p class="subtitle">Verwalten und überwachen Sie Docker-Container über einen Telegram-Bot</p>
+            <div class="badge-container">
+                <span class="badge">🚀 Docker</span>
+                <span class="badge">🤖 Telegram Bot</span>
+                <span class="badge">📊 Echtzeit</span>
+            </div>
+        </div>
+        <div class="hero-glow"></div>
+    </header>
+
+    <main class="container">
+
+        <section class="card">
+            <h2>🔍 Überblick</h2>
+            <p>
+                Dieses Tool ermöglicht es Ihnen, Ihre <strong>Docker-Container</strong> über einen 
+                <strong>Telegram-Bot</strong> remote zu verwalten. Logs anzeigen, Container neu starten 
+                und Berichte erhalten – alles mit wenigen Klicks in Telegram.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>✨ Funktionen</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="icon">📋</span>
+                    <h3>Logs abrufen</h3>
+                    <p>Wählen Sie einen Container und erhalten Sie seine neuesten Logs als Datei.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🔄</span>
+                    <h3>Neustart</h3>
+                    <p>Starten Sie jeden Container mit einem einfachen Befehl neu.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">📱</span>
+                    <h3>Telegram Zugriff</h3>
+                    <p>Erledigen Sie alles von Ihrem Telefon aus – ohne SSH oder Terminal.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">⚡</span>
+                    <h3>Schnelle Reaktion</h3>
+                    <p>Der Bot hört kontinuierlich auf Ihre Anfragen.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🤖 Erstellen Sie einen Telegram-Bot</h2>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <p>Öffnen Sie Telegram und schreiben Sie <strong>@BotFather</strong>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <p>Senden Sie den Befehl <span class="cmd">/newbot</span>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <p>Wählen Sie einen <strong>Namen</strong> für Ihren Bot (z.B. <code>Mansoori Monitor</code>).</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">4</span>
+                    <p>Wählen Sie einen <strong>Benutzernamen</strong>, der mit <code>bot</code> endet (z.B. <code>mansoori_monitor_bot</code>).</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">5</span>
+                    <p>Kopieren Sie nach der Bestätigung den <strong>Token</strong> (z.B. <code>123456:ABC-DEF...</code>). Dies ist Ihr <span class="var">BOT_TOKEN</span>.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>Bewahren Sie Ihren Bot-Token sicher auf. Geben Sie ihn niemals weiter.</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🆔 CHAT_ID abrufen</h2>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <p><strong>Starten</strong> Sie Ihren Bot in Telegram (Start drücken oder <span class="cmd">/start</span> senden).</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <p>Um Ihre numerische <strong>Chat-ID</strong> zu erhalten, verwenden Sie eine dieser Methoden:</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <p>
+                        <strong>Methode 1:</strong> Verwenden Sie den Bot <strong>@userinfobot</strong>. 
+                        Starten Sie ihn und senden Sie <span class="cmd">/start</span>. Er zeigt Ihre ID an.
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-num">4</span>
+                    <p>
+                        <strong>Methode 2 (API):</strong> Nachdem Sie Ihrem Bot eine Nachricht gesendet haben, öffnen Sie diese URL in Ihrem Browser:
+                        <br />
+                        <code>https://api.telegram.org/bot&lt;TOKEN&gt;/getUpdates</code>
+                        <br />
+                        (Ersetzen Sie <code>&lt;TOKEN&gt;</code> durch Ihren Bot-Token.)
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-num">5</span>
+                    <p>Suchen Sie in der JSON-Ausgabe nach <code>"chat":{"id":123456789}</code>. Die Zahl in <code>id</code> ist Ihre <span class="var">CHAT_ID</span>.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">⚠️</span>
+                <p>
+                    Wenn Sie eine Gruppe verwenden, fügen Sie den Bot zur Gruppe hinzu und verwenden Sie die API-Methode. 
+                    Die Gruppen-<strong>CHAT_ID</strong> beginnt normalerweise mit <code>-</code> (z.B. <code>-100123456789</code>).
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🧰 Voraussetzungen</h2>
+            <ul class="prereq-list">
+                <li><span class="cmd">bash</span> – Zum Ausführen des Skripts</li>
+                <li><span class="cmd">curl</span> – Für die Telegram-API-Kommunikation</li>
+                <li><span class="cmd">jq</span> – Für die JSON-Verarbeitung</li>
+                <li><span class="cmd">docker</span> – Für die Container-Verwaltung</li>
+                <li><span class="cmd">(Optional) tmux / screen</span> – Für die langfristige Ausführung</li>
+            </ul>
+            <p class="note">
+                <strong>Hinweis:</strong> Alle Tools müssen auf dem Host-Rechner installiert sein.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>⚙️ Konfiguration</h2>
+            <div class="config-block">
+                <div class="config-item">
+                    <span class="var">BOT_TOKEN</span>
+                    <span class="desc">Der Telegram-Bot-Token, der von @BotFather erhalten wurde.</span>
+                </div>
+                <div class="config-item">
+                    <span class="var">CHAT_ID</span>
+                    <span class="desc">Die numerische ID des Chats oder der Gruppe, in der der Bot antwortet.</span>
+                </div>
+                <div class="config-item">
+                    <span class="var">DOCKER</span>
+                    <span class="desc">Docker-Ausführungspfad (Standard: <code>/usr/bin/docker</code>).</span>
+                </div>
+                <div class="config-item">
+                    <span class="var">TEST_MODE</span>
+                    <span class="desc">Wenn <code>true</code>, sendet der Bot keine Nachrichten (für Tests).</span>
+                </div>
+            </div>
+            <p class="note">
+                <strong>🔐 Sicherheit:</strong> Speichern Sie Ihren Token und Ihre CHAT_ID in Umgebungsvariablen oder einer separaten Datei.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>▶️ Ausführung</h2>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <p>Laden Sie die Datei <span class="file">telegram-container-monitoring.sh</span> herunter.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <p>Setzen Sie die Variablen <code>BOT_TOKEN</code> und <code>CHAT_ID</code> darin.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <p>Machen Sie die Datei ausführbar: <span class="cmd">chmod +x telegram-container-monitoring.sh</span></p>
+                </div>
+                <div class="step">
+                    <span class="step-num">4</span>
+                    <p>Führen Sie das Skript aus: <span class="cmd">./telegram-container-monitoring.sh</span></p>
+                </div>
+                <div class="step">
+                    <span class="step-num">5</span>
+                    <p>Öffnen Sie Ihren Bot in Telegram und senden Sie <span class="cmd">/list</span>.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>Für die stabile Hintergrundausführung verwenden Sie <span class="cmd">tmux</span> oder <span class="cmd">screen</span>.</p>
+            </div>
+        </section>
+
+        <section class="card service-section">
+            <div class="service-inner">
+                <h2>🖥️ Als Systemd-Dienst ausführen (Ubuntu)</h2>
+                <p style="color:var(--text-secondary); margin-bottom:0.8rem;">
+                    Um das Skript dauerhaft im Hintergrund auszuführen, können Sie einen <strong>systemd-Dienst</strong> verwenden. 
+                    Dadurch wird das Skript automatisch beim Serverstart ausgeführt und bei Abstürzen neu gestartet.
+                </p>
+                <div class="step-list">
+                    <div class="step">
+                        <span class="step-num">1</span>
+                        <p>
+                            Erstellen Sie eine neue Dienstdatei in <code>/etc/systemd/system/</code>:
+                            <br />
+                            <span class="cmd">sudo nano /etc/systemd/system/mansoori-monitor.service</span>
+                        </p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">2</span>
+                        <p>
+                            Fügen Sie den folgenden Inhalt ein (ersetzen Sie den Skriptpfad durch den tatsächlichen):
+                        </p>
+                        <pre>
+[Unit]
+Description=Mansoori Telegram Überwachungsdienst
+After=docker.service network.target
+Requires=docker.service
+
+[Service]
+Type=simple
+User=root
+ExecStart=/bin/bash /path/to/telegram-container-monitoring.sh
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+                        </pre>
+                        <p class="note" style="margin-top:0.8rem;">
+                            <strong>⚠️ Hinweis:</strong> Ersetzen Sie <code>/path/to/telegram-container-monitoring.sh</code> durch den tatsächlichen Pfad zu Ihrem Skript.
+                        </p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">3</span>
+                        <p>Speichern Sie die Datei und verlassen Sie den Editor (<kbd>Ctrl+X</kbd>, dann <kbd>Y</kbd>, dann <kbd>Enter</kbd>).</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">4</span>
+                        <p>Laden Sie systemd neu, um den neuen Dienst zu erkennen: <span class="cmd">sudo systemctl daemon-reload</span></p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">5</span>
+                        <p>Aktivieren Sie den Dienst für den automatischen Start beim Booten: <span class="cmd">sudo systemctl enable mansoori-monitor.service</span></p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">6</span>
+                        <p>Starten Sie den Dienst: <span class="cmd">sudo systemctl start mansoori-monitor.service</span></p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">7</span>
+                        <p>Überprüfen Sie den Dienststatus: <span class="cmd">sudo systemctl status mansoori-monitor.service</span></p>
+                    </div>
+                </div>
+                <div class="tip-box">
+                    <span class="tip-icon">📊</span>
+                    <p>
+                        Dienst-Logs anzeigen mit <span class="cmd">sudo journalctl -u mansoori-monitor.service -f</span>.
+                        Zum Stoppen des Dienstes: <span class="cmd">sudo systemctl stop mansoori-monitor.service</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📝 Bot-Befehle nach Token-Erhalt einrichten</h2>
+            <p>
+                Nachdem Sie Ihren Bot-Token erhalten haben, müssen Sie seine Befehle einrichten, damit Benutzer die verfügbaren Funktionen sehen können. 
+                Verwenden Sie dafür <strong>BotFather</strong>.
+            </p>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <p>Schreiben Sie <strong>@BotFather</strong> auf Telegram.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <p>Senden Sie <span class="cmd">/mybots</span> und wählen Sie Ihren Bot aus.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <p>Wählen Sie <strong>Edit Bot</strong> → <strong>Edit Commands</strong>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">4</span>
+                    <p>
+                        Geben Sie Ihre Befehlsliste in diesem Format ein (einer pro Zeile):
+                        <br />
+                        <code>befehl1 - Beschreibung von Befehl 1</code>
+                        <br />
+                        <code>befehl2 - Beschreibung von Befehl 2</code>
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-num">5</span>
+                    <p>Für den Befehl <span class="cmd">/list</span> verwenden Sie diese Beschreibung:</p>
+                    <div style="background:rgba(0,0,0,0.3); padding:0.8rem; border-radius:8px; margin-top:0.5rem; width:100%;">
+                        <code style="display:block; direction:ltr; text-align:left;">list - Hauptmenü für Container-Verwaltung anzeigen (Logs / Neustart)</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-num">6</span>
+                    <p>Nach dem Senden sind die neuen Befehle sofort in Ihrem Bot aktiv.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>
+                    Benutzerdefinierte Befehle erscheinen, wenn Benutzer <code>/</code> im Chat mit Ihrem Bot eingeben, 
+                    was die Interaktion viel einfacher macht.
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>👥 Bot zur Gruppe hinzufügen und Admin-Zugriff gewähren</h2>
+            <p>
+                Um den Bot in Gruppen zu verwenden, fügen Sie ihn zunächst zur Gruppe hinzu und gewähren Sie dann Admin-Berechtigungen, damit er Nachrichten verwalten kann.
+            </p>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <p>Finden Sie Ihren Bot auf Telegram und klicken Sie auf seinen Namen.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <p>Wählen Sie <strong>Zu Gruppe hinzufügen</strong>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <p>Wählen Sie Ihre Gruppe und fügen Sie den Bot hinzu.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">4</span>
+                    <p>Klicken Sie in der Gruppe auf den Namen des Bots und wählen Sie <strong>Gruppe verwalten</strong>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">5</span>
+                    <p>Klicken Sie unter <strong>Administratoren</strong> auf <strong>Admin hinzufügen</strong>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">6</span>
+                    <p>Wählen Sie Ihren Bot aus der Liste und aktivieren Sie die erforderlichen Berechtigungen (z.B. Nachrichten senden, Nachrichten löschen, Mitglieder verwalten).</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">7</span>
+                    <p>Bestätigen Sie, um den Bot als Gruppen-Admin hinzuzufügen.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>
+                    Die Gewährung von Admin-Zugriff ermöglicht es dem Bot, Nachrichten zu verwalten und auf Benutzeranfragen richtig zu reagieren.
+                    Ohne diese Berechtigung kann der Bot in Gruppen nicht richtig funktionieren.
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🛠️ Benutzerdefinierte Befehle für Ihren Telegram-Bot erstellen</h2>
+            <p>
+                Um Ihrem Telegram-Bot neue Befehle hinzuzufügen, verwenden Sie <strong>BotFather</strong>. 
+                Benutzerdefinierte Befehle helfen Benutzern, die Funktionen Ihres Bots zu entdecken.
+            </p>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <p>Schreiben Sie <strong>@BotFather</strong> auf Telegram.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <p>Senden Sie <span class="cmd">/mybots</span> und wählen Sie Ihren Bot aus.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <p>Wählen Sie <strong>Edit Bot</strong> → <strong>Edit Commands</strong>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">4</span>
+                    <p>
+                        Geben Sie Ihre Befehlsliste in diesem Format ein (einer pro Zeile):
+                        <br />
+                        <code>befehl1 - Beschreibung von Befehl 1</code>
+                        <br />
+                        <code>befehl2 - Beschreibung von Befehl 2</code>
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-num">5</span>
+                    <p>Für den Befehl <span class="cmd">/list</span> verwenden Sie diese Beschreibung:</p>
+                    <div style="background:rgba(0,0,0,0.3); padding:0.8rem; border-radius:8px; margin-top:0.5rem; width:100%;">
+                        <code style="display:block; direction:ltr; text-align:left;">list - Hauptmenü für Container-Verwaltung anzeigen (Logs / Neustart)</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-num">6</span>
+                    <p>Nach dem Senden sind die neuen Befehle sofort in Ihrem Bot aktiv.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>
+                    Benutzerdefinierte Befehle erscheinen, wenn Benutzer <code>/</code> im Chat mit Ihrem Bot eingeben, 
+                    was die Interaktion viel einfacher macht.
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📟 Der /list-Befehl</h2>
+            <p>
+                Der Befehl <span class="cmd">/list</span> ist der Haupt-Einstiegspunkt für die Interaktion mit dem Bot. 
+                Wenn Sie ihn senden, antwortet der Bot mit einer Inline-Tastatur, die zwei Optionen anzeigt:
+            </p>
+            <ul style="list-style:none; padding:0.5rem 0; display:flex; flex-direction:column; gap:0.8rem;">
+                <li style="display:flex; align-items:center; gap:0.8rem; background:rgba(255,255,255,0.02); padding:0.6rem 1rem; border-radius:8px; border-left:3px solid var(--accent);">
+                    <span style="font-size:1.2rem;">📋</span>
+                    <span><strong>Logs</strong> – Wählen Sie diese Option, um Logs von jedem Container anzuzeigen und herunterzuladen.</span>
+                </li>
+                <li style="display:flex; align-items:center; gap:0.8rem; background:rgba(255,255,255,0.02); padding:0.6rem 1rem; border-radius:8px; border-left:3px solid #a78bfa;">
+                    <span style="font-size:1.2rem;">🔄</span>
+                    <span><strong>Neustart</strong> – Wählen Sie diese Option, um einen beliebigen Container neu zu starten.</span>
+                </li>
+            </ul>
+            <p class="note">
+                Nach der Auswahl einer Option zeigt der Bot eine Liste aller verfügbaren Container (einschließlich gestoppter) zur Auswahl an.
+            </p>
+            <div class="tip-box" style="margin-top:1rem;">
+                <span class="tip-icon">💡</span>
+                <p>
+                    Der Befehl <span class="cmd">/list</span> kann auch verwendet werden, um das Hauptmenü erneut anzuzeigen, wenn Sie zurückkehren müssen.
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📟 Bot-Befehle</h2>
+            <table class="commands-table">
+                <thead>
+                    <tr><th>Befehl</th><th>Beschreibung</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><span class="cmd">/list</span></td><td>Hauptmenü anzeigen (Logs / Neustart)</td></tr>
+                    <tr><td><span class="cmd">(Button-Klicks)</span></td><td>Container auswählen und Aktion ausführen</td></tr>
+                </tbody>
+            </table>
+            <p class="note">
+                Nach der Auswahl eines Containers werden die Logs als <code>.log</code>-Datei gesendet.
+            </p>
+        </section>
+
+        <footer class="footer">
+            <p>Mansoori Telegram Überwachung &mdash; Dokumentation v1.0</p>
+            <p class="small">Mit ❤️ entwickelt für einfache Docker-Verwaltung</p>
+        </footer>
+
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
