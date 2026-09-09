@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HADI Telegram Monitoring</title>
+    <title>Mansoori Telegram Monitoring</title>
     <link rel="stylesheet" href="css/styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
@@ -484,7 +484,7 @@
 
     <header class="hero">
         <div class="hero-content">
-            <h1>HADI Telegram Monitoring</h1>
+            <h1>Mansoori Telegram Monitoring</h1>
             <p class="subtitle">Manage and monitor Docker containers via Telegram bot</p>
             <div class="badge-container">
                 <span class="badge">🚀 Docker</span>
@@ -545,11 +545,11 @@
                 </div>
                 <div class="step">
                     <span class="step-num">3</span>
-                    <p>Choose a <strong>name</strong> for your bot (e.g., <code>HADI Monitor</code>).</p>
+                    <p>Choose a <strong>name</strong> for your bot (e.g., <code>Mansoori Monitor</code>).</p>
                 </div>
                 <div class="step">
                     <span class="step-num">4</span>
-                    <p>Choose a <strong>username</strong> ending with <code>bot</code> (e.g., <code>hadi_monitor_bot</code>).</p>
+                    <p>Choose a <strong>username</strong> ending with <code>bot</code> (e.g., <code>mansoori_monitor_bot</code>).</p>
                 </div>
                 <div class="step">
                     <span class="step-num">5</span>
@@ -686,7 +686,7 @@
                         <p>
                             Create a new service file in <code>/etc/systemd/system/</code>:
                             <br />
-                            <span class="cmd">sudo nano /etc/systemd/system/hadi-monitor.service</span>
+                            <span class="cmd">sudo nano /etc/systemd/system/mansoori-monitor.service</span>
                         </p>
                     </div>
                     <div class="step">
@@ -696,7 +696,7 @@
                         </p>
                         <pre>
 [Unit]
-Description=HADI Telegram Monitoring Service
+Description=Mansoori Telegram Monitoring Service
 After=docker.service network.target
 Requires=docker.service
 
@@ -726,22 +726,22 @@ WantedBy=multi-user.target
                     </div>
                     <div class="step">
                         <span class="step-num">5</span>
-                        <p>Enable the service to start automatically on boot: <span class="cmd">sudo systemctl enable hadi-monitor.service</span></p>
+                        <p>Enable the service to start automatically on boot: <span class="cmd">sudo systemctl enable mansoori-monitor.service</span></p>
                     </div>
                     <div class="step">
                         <span class="step-num">6</span>
-                        <p>Start the service: <span class="cmd">sudo systemctl start hadi-monitor.service</span></p>
+                        <p>Start the service: <span class="cmd">sudo systemctl start mansoori-monitor.service</span></p>
                     </div>
                     <div class="step">
                         <span class="step-num">7</span>
-                        <p>Check the service status: <span class="cmd">sudo systemctl status hadi-monitor.service</span></p>
+                        <p>Check the service status: <span class="cmd">sudo systemctl status mansoori-monitor.service</span></p>
                     </div>
                 </div>
                 <div class="tip-box">
                     <span class="tip-icon">📊</span>
                     <p>
-                        View service logs with <span class="cmd">sudo journalctl -u hadi-monitor.service -f</span>.
-                        To stop the service: <span class="cmd">sudo systemctl stop hadi-monitor.service</span>
+                        View service logs with <span class="cmd">sudo journalctl -u mansoori-monitor.service -f</span>.
+                        To stop the service: <span class="cmd">sudo systemctl stop mansoori-monitor.service</span>
                     </p>
                 </div>
             </div>
@@ -935,7 +935,7 @@ WantedBy=multi-user.target
         </section>
 
         <footer class="footer">
-            <p>HADI Telegram Monitoring &mdash; Documentation v1.0</p>
+            <p>Mansoori Telegram Monitoring &mdash; Documentation v1.0</p>
             <p class="small">Made with ❤️ for easy Docker management</p>
         </footer>
 
