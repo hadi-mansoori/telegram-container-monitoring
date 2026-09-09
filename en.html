@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HADI Telegram Monitoring</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-card: #14141e;
+            --bg-card-hover: #1a1a2e;
+            --border-color: #2a2a3e;
+            --text-primary: #f0f0f5;
+            --text-secondary: #a0a0b8;
+            --accent: #6c5ce7;
+            --accent-hover: #7c6cf7;
+            --radius: 16px;
+            --shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #14141e 0%, #1a1a2e 50%, #0d0d1a 100%);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 3.5rem 2.5rem;
+            margin: 1.5rem auto 2.5rem;
+            max-width: 1200px;
+            width: calc(100% - 3rem);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a78bfa, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(108,92,231,0.08) 0%, transparent 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .badge {
+            background: rgba(108,92,231,0.15);
+            border: 1px solid rgba(108,92,231,0.25);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 2rem 2.2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(108,92,231,0.3);
+        }
+
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            color: var(--text-primary);
+            text-align: left;
+        }
+
+        .card p, .card li {
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .card strong {
+            color: var(--text-primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .feature-item {
+            background: rgba(255,255,255,0.02);
+            padding: 1.5rem 1.2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .feature-item:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(108,92,231,0.2);
+            transform: translateY(-2px);
+        }
+
+        .feature-item .icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-item h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--text-primary);
+            text-align: left;
+        }
+
+        .feature-item p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 10px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .step-num {
+            background: var(--accent);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .step p {
+            margin: 0;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .step strong {
+            color: var(--text-primary);
+        }
+
+        .cmd, code, .var {
+            background: rgba(255,255,255,0.06);
+            padding: 0.15rem 0.6rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.85rem;
+            color: #a78bfa;
+            direction: ltr;
+            text-align: left;
+            display: inline-block;
+        }
+
+        pre {
+            background: rgba(0,0,0,0.4);
+            padding: 1.2rem 1.5rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            margin: 0.8rem 0;
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+            overflow: visible !important;
+            max-height: none !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #e0e0e5;
+            font-size: 0.85rem;
+            display: block;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .tip-box {
+            background: rgba(108,92,231,0.08);
+            border: 1px solid rgba(108,92,231,0.2);
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .tip-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .tip-box p {
+            margin: 0;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .config-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .config-item {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 0.6rem 1rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .config-item .var {
+            font-weight: 600;
+            min-width: 100px;
+        }
+
+        .config-item .desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            text-align: left;
+        }
+
+        .commands-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5rem 0;
+        }
+
+        .commands-table th {
+            background: rgba(108,92,231,0.15);
+            padding: 0.8rem 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .commands-table td {
+            padding: 0.8rem 1.2rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .commands-table tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .commands-table .cmd {
+            background: rgba(108,92,231,0.12);
+        }
+
+        .prereq-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .prereq-list li {
+            padding: 0.4rem 0;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            padding: 0.8rem 1rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            margin-top: 0.8rem;
+            text-align: left;
+        }
+
+        .file {
+            background: rgba(255,255,255,0.06);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #7dd3fc;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 1rem;
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .footer .small {
+            font-size: 0.8rem;
+            color: rgba(160,160,184,0.6);
+        }
+
+        kbd {
+            background: rgba(255,255,255,0.08);
+            padding: 0.15rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .service-section {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 auto 2rem auto !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            border: none !important;
+            overflow: visible !important;
+        }
+
+        .service-section .service-inner {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 2rem 2rem 2.2rem;
+            box-shadow: var(--shadow);
+            width: 100%;
+            overflow: visible !important;
+        }
+
+        .service-section pre {
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+            overflow: visible !important;
+            max-height: none !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+            padding-right: 0;
+        }
+
+        ul li, ol li {
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 2rem 1.2rem;
+                width: calc(100% - 1.5rem);
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .card {
+                padding: 1.5rem 1.2rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .config-item {
+                flex-direction: column;
+                gap: 0.2rem;
+            }
+            .service-section .service-inner {
+                padding: 1.4rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            .step {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+            .service-section .service-inner {
+                padding: 1rem 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>HADI Telegram Monitoring</h1>
+            <p class="subtitle">Manage and monitor Docker containers via Telegram bot</p>
+            <div class="badge-container">
+                <span class="badge">🚀 Docker</span>
+                <span class="badge">🤖 Telegram Bot</span>
+                <span class="badge">📊 Real-time</span>
+            </div>
+        </div>
+        <div class="hero-glow"></div>
+    </header>
+
+    <main class="container">
+
+        <section class="card">
+            <h2>🔍 Overview</h2>
+            <p>
+                This tool allows you to manage your <strong>Docker containers</strong> remotely using a 
+                <strong>Telegram bot</strong>. View logs, restart containers, and receive reports 
+                with just a few taps in Telegram.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>✨ Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="icon">📋</span>
+                    <h3>Get Logs</h3>
+                    <p>Select a container and receive its latest logs as a file.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🔄</span>
+                    <h3>Restart</h3>
+                    <p>Restart any container with a simple command.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">📱</span>
+                    <h3>Telegram Access</h3>
+                    <p>Do everything from your phone without SSH or terminal.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">⚡</span>
+                    <h3>Fast Response</h3>
+                    <p>The bot continuously listens for your requests.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🤖 Create a Telegram Bot</h2>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <p>Open Telegram and message <strong>@BotFather</strong>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <p>Send the command <span class="cmd">/newbot</span>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <p>Choose a <strong>name</strong> for your bot (e.g., <code>HADI Monitor</code>).</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">4</span>
+                    <p>Choose a <strong>username</strong> ending with <code>bot</code> (e.g., <code>hadi_monitor_bot</code>).</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">5</span>
+                    <p>After confirmation, copy the <strong>token</strong> (e.g., <code>123456:ABC-DEF...</code>). This is your <span class="var">BOT_TOKEN</span>.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>Store your bot token securely. Never share it with anyone.</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🆔 Get CHAT_ID</h2>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <p><strong>Start</strong> your bot in Telegram (press Start or send <span class="cmd">/start</span>).</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <p>To get your numeric <strong>chat ID</strong>, use one of these methods:</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <p>
+                        <strong>Method 1:</strong> Use the bot <strong>@userinfobot</strong>. 
+                        Start it and send <span class="cmd">/start</span>. It will show your ID.
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-num">4</span>
+                    <p>
+                        <strong>Method 2 (API):</strong> After sending a message to your bot, open this URL in your browser:
+                        <br />
+                        <code>https://api.telegram.org/bot&lt;TOKEN&gt;/getUpdates</code>
+                        <br />
+                        (Replace <code>&lt;TOKEN&gt;</code> with your bot token.)
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-num">5</span>
+                    <p>In the JSON output, look for <code>"chat":{"id":123456789}</code>. The number inside <code>id</code> is your <span class="var">CHAT_ID</span>.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">⚠️</span>
+                <p>
+                    If using a group, add the bot to the group and use the API method. 
+                    Group <strong>CHAT_ID</strong> usually starts with <code>-</code> (e.g., <code>-100123456789</code>).
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🧰 Prerequisites</h2>
+            <ul class="prereq-list">
+                <li><span class="cmd">bash</span> – To run the script</li>
+                <li><span class="cmd">curl</span> – For Telegram API communication</li>
+                <li><span class="cmd">jq</span> – For JSON processing</li>
+                <li><span class="cmd">docker</span> – For container management</li>
+                <li><span class="cmd">(Optional) tmux / screen</span> – For long-running execution</li>
+            </ul>
+            <p class="note">
+                <strong>Note:</strong> All tools must be installed on the host machine.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>⚙️ Configuration</h2>
+            <div class="config-block">
+                <div class="config-item">
+                    <span class="var">BOT_TOKEN</span>
+                    <span class="desc">The Telegram bot token obtained from @BotFather.</span>
+                </div>
+                <div class="config-item">
+                    <span class="var">CHAT_ID</span>
+                    <span class="desc">The numeric ID of the chat or group where the bot responds.</span>
+                </div>
+                <div class="config-item">
+                    <span class="var">DOCKER</span>
+                    <span class="desc">Docker executable path (default: <code>/usr/bin/docker</code>).</span>
+                </div>
+                <div class="config-item">
+                    <span class="var">TEST_MODE</span>
+                    <span class="desc">If <code>true</code>, the bot won't send any messages (for testing).</span>
+                </div>
+            </div>
+            <p class="note">
+                <strong>🔐 Security:</strong> Store your token and CHAT_ID in environment variables or a separate file.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>▶️ How to Run</h2>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <p>Download the <span class="file">telegram-container-monitoring.sh</span> file.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <p>Set the <code>BOT_TOKEN</code> and <code>CHAT_ID</code> variables inside it.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <p>Make the file executable: <span class="cmd">chmod +x telegram-container-monitoring.sh</span></p>
+                </div>
+                <div class="step">
+                    <span class="step-num">4</span>
+                    <p>Run the script: <span class="cmd">./telegram-container-monitoring.sh</span></p>
+                </div>
+                <div class="step">
+                    <span class="step-num">5</span>
+                    <p>Open your bot in Telegram and send <span class="cmd">/list</span>.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>For stable background execution, use <span class="cmd">tmux</span> or <span class="cmd">screen</span>.</p>
+            </div>
+        </section>
+
+        <section class="card service-section">
+            <div class="service-inner">
+                <h2>🖥️ Run as a Systemd Service (Ubuntu)</h2>
+                <p style="color:var(--text-secondary); margin-bottom:0.8rem;">
+                    To run the script permanently in the background, you can use a <strong>systemd service</strong>. 
+                    This ensures the script starts automatically on server boot and restarts if it crashes.
+                </p>
+                <div class="step-list">
+                    <div class="step">
+                        <span class="step-num">1</span>
+                        <p>
+                            Create a new service file in <code>/etc/systemd/system/</code>:
+                            <br />
+                            <span class="cmd">sudo nano /etc/systemd/system/hadi-monitor.service</span>
+                        </p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">2</span>
+                        <p>
+                            Add the following content (replace the script path with the actual one):
+                        </p>
+                        <pre>
+[Unit]
+Description=HADI Telegram Monitoring Service
+After=docker.service network.target
+Requires=docker.service
+
+[Service]
+Type=simple
+User=root
+ExecStart=/bin/bash /path/to/telegram-container-monitoring.sh
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+                        </pre>
+                        <p class="note" style="margin-top:0.8rem;">
+                            <strong>⚠️ Note:</strong> Replace <code>/path/to/telegram-container-monitoring.sh</code> with the actual path to your script.
+                        </p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">3</span>
+                        <p>Save the file and exit the editor (<kbd>Ctrl+X</kbd>, then <kbd>Y</kbd>, then <kbd>Enter</kbd>).</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">4</span>
+                        <p>Reload systemd to recognize the new service: <span class="cmd">sudo systemctl daemon-reload</span></p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">5</span>
+                        <p>Enable the service to start automatically on boot: <span class="cmd">sudo systemctl enable hadi-monitor.service</span></p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">6</span>
+                        <p>Start the service: <span class="cmd">sudo systemctl start hadi-monitor.service</span></p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">7</span>
+                        <p>Check the service status: <span class="cmd">sudo systemctl status hadi-monitor.service</span></p>
+                    </div>
+                </div>
+                <div class="tip-box">
+                    <span class="tip-icon">📊</span>
+                    <p>
+                        View service logs with <span class="cmd">sudo journalctl -u hadi-monitor.service -f</span>.
+                        To stop the service: <span class="cmd">sudo systemctl stop hadi-monitor.service</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📝 Set Bot Commands After Getting Token</h2>
+            <p>
+                After obtaining your bot token, you need to set up its commands so users can see available features. 
+                Use <strong>BotFather</strong> for this.
+            </p>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <p>Message <strong>@BotFather</strong> on Telegram.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <p>Send <span class="cmd">/mybots</span> and select your bot.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <p>Choose <strong>Edit Bot</strong> → <strong>Edit Commands</strong>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">4</span>
+                    <p>
+                        Enter your command list in this format (one per line):
+                        <br />
+                        <code>command1 - Description of command 1</code>
+                        <br />
+                        <code>command2 - Description of command 2</code>
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-num">5</span>
+                    <p>For the <span class="cmd">/list</span> command, use this description:</p>
+                    <div style="background:rgba(0,0,0,0.3); padding:0.8rem; border-radius:8px; margin-top:0.5rem; width:100%;">
+                        <code style="display:block; direction:ltr; text-align:left;">list - Show main menu for container management (logs / restart)</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-num">6</span>
+                    <p>After sending, the new commands will be active immediately in your bot.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>
+                    Custom commands appear when users type <code>/</code> in the chat with your bot, 
+                    making interaction much easier.
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>👥 Add Bot to Group and Grant Admin Access</h2>
+            <p>
+                To use the bot in groups, first add it to the group and then grant admin permissions so it can manage messages.
+            </p>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <p>Find your bot on Telegram and click on its name.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <p>Select <strong>Add to Group</strong>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <p>Choose your group and add the bot.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">4</span>
+                    <p>In the group, click on the bot's name and select <strong>Manage Group</strong>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">5</span>
+                    <p>In <strong>Administrators</strong>, click <strong>Add Admin</strong>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">6</span>
+                    <p>Select your bot from the list and enable the necessary permissions (e.g., send messages, delete messages, manage members).</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">7</span>
+                    <p>Confirm to add the bot as a group admin.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>
+                    Granting admin access allows the bot to manage messages and respond to user requests properly.
+                    Without this, the bot cannot function correctly in groups.
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🛠️ Create Custom Commands for Your Telegram Bot</h2>
+            <p>
+                To add new commands to your Telegram bot, use <strong>BotFather</strong>. 
+                Custom commands help users discover your bot's features.
+            </p>
+            <div class="step-list">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <p>Message <strong>@BotFather</strong> on Telegram.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">2</span>
+                    <p>Send <span class="cmd">/mybots</span> and select your bot.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">3</span>
+                    <p>Choose <strong>Edit Bot</strong> → <strong>Edit Commands</strong>.</p>
+                </div>
+                <div class="step">
+                    <span class="step-num">4</span>
+                    <p>
+                        Enter your command list in this format (one per line):
+                        <br />
+                        <code>command1 - Description of command 1</code>
+                        <br />
+                        <code>command2 - Description of command 2</code>
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-num">5</span>
+                    <p>For the <span class="cmd">/list</span> command, use this description:</p>
+                    <div style="background:rgba(0,0,0,0.3); padding:0.8rem; border-radius:8px; margin-top:0.5rem; width:100%;">
+                        <code style="display:block; direction:ltr; text-align:left;">list - Show main menu for container management (logs / restart)</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-num">6</span>
+                    <p>After sending, the new commands will be active immediately in your bot.</p>
+                </div>
+            </div>
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <p>
+                    Custom commands appear when users type <code>/</code> in the chat with your bot, 
+                    making interaction much easier.
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📟 The /list Command</h2>
+            <p>
+                The <span class="cmd">/list</span> command is the main entry point for interacting with the bot. 
+                When you send it, the bot responds with an inline keyboard showing two options:
+            </p>
+            <ul style="list-style:none; padding:0.5rem 0; display:flex; flex-direction:column; gap:0.8rem;">
+                <li style="display:flex; align-items:center; gap:0.8rem; background:rgba(255,255,255,0.02); padding:0.6rem 1rem; border-radius:8px; border-left:3px solid var(--accent);">
+                    <span style="font-size:1.2rem;">📋</span>
+                    <span><strong>Logs</strong> – Select this to view and download logs from any container.</span>
+                </li>
+                <li style="display:flex; align-items:center; gap:0.8rem; background:rgba(255,255,255,0.02); padding:0.6rem 1rem; border-radius:8px; border-left:3px solid #a78bfa;">
+                    <span style="font-size:1.2rem;">🔄</span>
+                    <span><strong>Restart</strong> – Select this to restart any container.</span>
+                </li>
+            </ul>
+            <p class="note">
+                After selecting either option, the bot shows a list of all available containers (including stopped ones) for you to choose from.
+            </p>
+            <div class="tip-box" style="margin-top:1rem;">
+                <span class="tip-icon">💡</span>
+                <p>
+                    The <span class="cmd">/list</span> command can also be used to redisplay the main menu if you need to go back.
+                </p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📟 Bot Commands</h2>
+            <table class="commands-table">
+                <thead>
+                    <tr><th>Command</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><span class="cmd">/list</span></td><td>Show main menu (logs / restart)</td></tr>
+                    <tr><td><span class="cmd">(Button clicks)</span></td><td>Select container and perform action</td></tr>
+                </tbody>
+            </table>
+            <p class="note">
+                After selecting a container, logs are sent as a <code>.log</code> file.
+            </p>
+        </section>
+
+        <footer class="footer">
+            <p>HADI Telegram Monitoring &mdash; Documentation v1.0</p>
+            <p class="small">Made with ❤️ for easy Docker management</p>
+        </footer>
+
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
