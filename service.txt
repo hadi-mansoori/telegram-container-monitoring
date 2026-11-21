@@ -1,0 +1,19 @@
+
+[Unit]
+Description=Mansoori Telegram Monitoring Service
+After=docker.service network-online.target
+Requires=docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home
+ExecStart=/bin/bash /home/telegram-container-monitoring.sh
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
